@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Agile Software Development</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+
+      .pisti img {
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Agile Software Development
+
+Gabor Szabo <gabor.szabo@emarsys.com>
+
+---
+
+# Agenda
+
+1. Historical context
+2. Manifesto for Agile Software Development
+3. eXtreme Programming
+
+---
+
+# Historical context
+
+Let's go back to the end of the 1990's...
+
+1. Waterfall & its problems
+2. Emergence of lightweight processes
+
+---
+
+## Waterfall
+
+Standard process in the industry for software projects for 20-30 years...
+
+Locked phases of the project
+
+.center[.pisti[![Waterfall model](Waterfall_model.svg)]]
+
+By Peter Kemp / Paul Smith - Adapted from Paul Smith's work at wikipedia, CC BY 3.0, https://commons.wikimedia.org/w/index.php?curid=10633070
+
+???
+
+* termek eloallitasa kotott fazisokra osztva
+ * requirements
+ * analysis
+ * design
+ * coding, implementation
+ * testing
+ * maintenance
+* waterfall / vizeses: ahogy halad a projekt, ugy kerul egyik fazisbol a masikba, mint egy folyo vizeseseken keresztul kulonbozo szakaszokba
+* formalizalt, burokratikus folyamat
+ * minden fazis vegen ki kell esnie “valaminek”: kovetelmeny dokumentaciok, architektura modellek, kod, …
+ * ez a valami az input a kovetkezo fazishoz, nelkule nem tud elindulni
+
+---
+
+## Problems of waterfall
+
+1. Long phases
+
+???
+
+* mire barmi elkeszul, es egy celszemely tenyleg el tudna kezdeni hasznalni a termeket eltelik gyakran 9-12 honap
+* sok korulmeny meg tud valtozni ennyi ido alatt
+* a formalizalt folyamat miatt a kovetelmenyek kobe / szerzodesekbe vannak vesve, nincs mod reagalni a megvaltozott korulmenyekre
+* emiatt gyakran nem azt kapjak a megrendelok, amire a kiadas pillanataban tenyleg szukseguk van
+
+--
+
+2. Assumes we get everything right on first try
+
+???
+
+* ez csak egy volt kollegamnak megy
+* ha az egyik fazisban valamit elrontunk / nem tervezunk vele (mert nem is tudunk rola, egy kesobbi fazisban derul csak ki), koltseges korrigalni a terveket
+* gyakran csusztak ki projektek emiatt hataridobol es emelkedtek meg a koltsegek
+
+--
+
+3. Assumes coding is just mechanical work
+
+???
+
+* pedig ez az a resz, ahol a “haz felepul”, az elvart funkcionalitas es szabalyok megvalositasra kerulnek
+* kiveszi az emberi tenyezot
+* elveszik a contextus, a “big picture”, miert is kell azt csinalni amit a specifikacio eloir, pedig annak tudataban es az implementacio soran szerzett tapasztalatokbol gyakran jobb megoldast is lehetne talalni
+
+--
+
+Result (and cause): **business does NOT trust dev**
+
+---
+
+## Lightweight processes
+
+1997-ish... Kent Beck comes up with eXtreme Programming [on a project](https://martinfowler.com/bliki/C3.html)
+
+> _"Heal the divide between business and development"_
+
+More lightweight software dev process arrived on the horizon
+
+Robert Martin & Martin Fowler organized a meeting with the leaders of these movements
+
+    2001. February - meeting in Snowbird, Utah, in a ski-lodge
+
+After two days of discussion, a manifesto was articulated
+
+They put it up on a website, and it went viral
+
+???
+
+* hogyan kivanta a healinget elerni: kesobb visszaterunk ra, itt most az a fontos, hogy burokratikus folyamatok helyett kevesebb eloirast es tobb kommunikaciot batoritott a ket oldal kozott
+* Uncle Bob & Martin Fowler: nem tudjuk a waterfall lenduletet megtorni, ha megosztottak vagyunk
+
+---
+
+# Manifestor for Agile Software Development
+
+1. [Manifesto](http://agilemanifesto.org/)
+2. [Principles](http://agilemanifesto.org/principles.html)
+
+Let's look at them...
+
+---
+
+# eXtreme Programming = XP
+
+.center[![Values Principles Practices](bridge.png)]
+
+---
+
+## Values
+
+.center[Targeting beneficial cooperation of people inside teams and organizations]
+
+1. Communication
+2. Simplicity
+3. Feedback
+4. Courage
+5. Respect
+
+???
+
+Ertekek: mi az amit fontosnak/jonak tartunk egy szituacioban?
+XP ertekek az emberek hatekony egyuttmukodeset celozzak meg egy csapaton es szervezeten belul
+* communication
+    * emberek egyuttmukodese lehetetlen kommunikacio nelkul
+* respect
+    * hatekony csapatmunka es kommunikacio szukseges feltetele a tisztelet
+
+---
+
+### Simplicity
+
+Think towards _"what's the simplest thing that could possible work?"_
+
+Reaching simplicity is _usually hard_
+
+Simple != dumb, != easy
+
+Simplicity is **knowledge and context-dependent**!
+
+_Why?_
+
+???
+
+* miert?
+  * konnyebb kommunikalni
+  * konnyebb megvaltoztatni
+
+---
+
+### Feedback
+
+> _"no fixed direction remains valid for long"_
+
+Feedback helps to regularly correct our directions
+- for product development: which features to put more effort in
+- for management: _"cold dose of reality"_ about progress, schedule and deadline
+
+Various sources
+- _what do you think of this design?_
+- _was the code easy to test?_
+- _which of these possible solutions is the simplest?_
+- _do users ever use this feature?_
+
+???
+
+* “no fixed direction remains valid for long”
+* a valtozas elkerulhetetlen, a feedback segit korrigalni az iranyt, hogy tovabbra is a celjaink fele haladjunk
+    * development szamara, mennyire jo a keszitett termek, merre menjenek tovabb
+    * mgmt szamara: hetente visszajelzes, hogyan haladunk, mennyit csuszunk => rendszeresen jon a “cold dose of reality"
+* sok forrasbol lehet szerezni
+    * mi a velemenyed errol az otletemrol?
+    * miutan implementaltal valamit, tetszik a kod/design?
+    * konnyu volt tesztelni?
+    * hogyan tetszik a felhasznaloknak ez az uj feature?
+    * a lehetseges 3 iranybol melyik a legegyszerubb design?
+* kommunikacio elengedhetetlen resze
+
+---
+
+### Courage
+
+* to take action if a problem is clear
+* to wait for the real problem to emerge if it is not clear
+* to speak truth —> communication
+* to seek answers —> feedback
+* to try out other solutions —> simplicity
+
+---
+
+## Principles
+
+1. humanity
+1. economics
+1. mutual benefit
+1. self-similarity
+1. improvement
+1. diversity
+1. reflection
+1. flow
+1. opportunity
+1. redundancy
+1. failure
+1. quality
+1. baby steps
+1. accepted responsibility
+
+???
+
+* humanity
+    * nem szabad elfelejteni, hogy nem gepek, hanem emberek keszitik a sw-t (a problemak nagy resze people problem)
+    * emberi, szocialis szuksegletekre is gondolni kell
+    * epitsunk arra amiben jok az emberek (creativity), segitsunk abban, amiben nem (manualis, repetitiv feladatok)
+* economics
+    * sok ember sok penzebe kerul a sw dev, torekedjunk a gazdasagos munkara
+    * a termek amit keszitunk uzletileg is legyen mukodokepes, ne csak egy “technical success” legyen
+    * minel hamarabb termel / takarit meg penzt a termek, annal ertekesebb —> simplicity, incremental design
+* mutual benefit
+    * ha olyan megoldast valasztunk egy problemara, amivel egy masik fel rosszul jar, az osszessegeben veszteseg
+        * emberi kapcsolatokat, kommunikaciot rombolhat le
+    * pl. reszletes dokumentacio eloirasa
+        * neked most rossz, mert le kell lassitanod a fejlesztest
+        * talan valakinek a jovoben jo lesz, de ketseges, ha nincs rendesen karbantartva a doksi
+    * helyette: automatizalt tesztek
+        * neked jo, mert segit gyorsabban haladni
+            * tudsz javitani a tesztek biztonsagaban a kod strukturajan, hogy erthetobb legyen
+            * ezaltal buszkebb lehetsz a munkadra
+        * jovobeli illetonek jo, mert a tesztek egy futtathato dokumentaciot kepeznek a kodrol, ami nem tud out of sync kerulni
+* self-similarity
+    * probaljuk meg azt a megoldast hasznalni egy problemara, ami mashol is bevalt mar
+    * pl. feedback perces, oras, napi, heti, ciklus szinten
+* improvement
+    * “perfect is a verb, not a noun"
+* redundancy
+    * tobb gyakorlat egyuttese probal kikuszobolni egy problemat / megoldani egy feladatot, hogy ha az egyikbe hiba is csuszna, legyen meg vedohalo
+    * teszteles es feedback tobb szinten: tdd, acceptance tests, iteration, cycle
+* baby steps
+    * nagyokat valtoztatni egy lepesben veszelyesebb es lassabb
+
+---
+
+## Practices
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
