@@ -17,6 +17,14 @@
       .pisti img {
         width: 50%;
       }
+
+      .large-image img {
+        width: 80%;
+      }
+
+      .small-image img {
+        width: 100px;
+      }
     </style>
   </head>
   <body>
@@ -144,7 +152,7 @@ Let's look at them...
 
 # eXtreme Programming = XP
 
-.center[![Values Principles Practices](bridge.png)]
+.center[![Values Principles Practices](http://mea-docta-ignorantia.appspot.com/images/slides/agile/bridge.png)]
 
 ---
 
@@ -231,19 +239,19 @@ Various sources
 
 ## Principles
 
-1. humanity
-1. economics
-1. mutual benefit
-1. self-similarity
-1. improvement
+1. **humanity**
+1. **economics**
+1. **mutual benefit**
+1. **self-similarity**
+1. **improvement**
 1. diversity
 1. reflection
 1. flow
 1. opportunity
-1. redundancy
+1. **redundancy**
 1. failure
 1. quality
-1. baby steps
+1. **baby steps**
 1. accepted responsibility
 
 ???
@@ -279,9 +287,188 @@ Various sources
     * nagyokat valtoztatni egy lepesben veszelyesebb es lassabb
 
 ---
+class: center, middle
 
 ## Practices
 
+---
+
+### Release planning, aka. planning game
+
+.center[.large-image[![Release plan](backlog.png)]]
+
+???
+
+* release ciklusban elerendo celok fele vezeto ut felbontasa kisebb lepesekre
+* kisebb lepes: user story
+* story-k becslese, priorizalasa, kialakul ezekbol egy backlog
+* ciklus soran modositani, kiegesziteni kell a backlogot: backlog grooming (massage)
+* ha megcsuszna a fejlesztes, vagy modosulna a backlog valami valtozasra reagalva, akkor lehet targyalni hogy kitoljuk a hataridot, vagy a release scope-jan / befoglalt storyk szaman csokkentunk
+
+---
+
+### Iteration planning
+
+.center[.large-image[![Release plan into iteration plans](jira.png)]]
+
+???
+
+* fix hosszu iteracio kijelolese, tipikusan 1-2 het
+* ~ soran bevalogat a csapat n db story-t az iteracioba a backlogrol es technikailag nagyjabol megtervezi
+    * priorizalva vannak a backlogon, fontossagi sorrendben
+
+---
+
+### Informative workspace
+
+.center[.large-image[![Whiteboard with story and task cards](whiteboard.jpg)]]
+
+???
+
+* ha valaki belep a csapat teruletere / szobajaba, kapjon vmi kepet hogyan all a ciklus es az iteracio
+
+---
+
+### Whole team
+
+Every necessary skill for the success of the project should be present in the team.
+
+- Product manager
+- Programmers
+- Domain experts
+- On site customer
+- Technical writer
+- ...
+
+???
+
+* legyenek a csapat reszei azok az emberek es skillek, amik szuksegesek a projekthez
+* programozo, domain expert, product manager/owner, system engineer, tech writer, UX & UI expert, on site customer
+
+---
+
+### Sit together
+
+.center[.large-image[![Open office](oo.jpg)]]
+
+???
+
+* a csapat tagjai uljenek kozel egymashoz => sokkal hatekonyabb kommunikacio mintha szet lennenek szorva
+* —> crew Karolyekkal segitett integralodni
+
+---
+class: center, middle
+
+### Energized work
+
+???
+
+* annyi idot dolgozz, amennyit produktivan kepes dolgozni es ezt az utemet fenn tudod tartani
+* tipikusan 40 ora korul, de egyenfuggo
+* tulterheles kiegeshez vezet, pedig a csapat hosszu tavon szeretne fenntartani tempojat
+* sok okos meglatas, otlet, kiserletezgetes szukseges a sw fejleszteshez, a muzsa viszont a kipihent, rakeszult elmet gyakrabban latogatja
+* gyakori tulorazas utalhat arra, hogy rosszul megy a projekt, nincs rahatasunk sok tenyezore, es azzal probaljuk kompenzalni, hogy tobb idot dolgozunk
+    * pedig faradt sw fejlesztessel elofordulhat, hogy erteket veszunk el a sw-bol, csak ezt nem vesszuk eszre
+* betegseg: gyogyulj meg, pihend ki magad, azzal tobbet segitesz a csapatnak, mintha betegseged ellenere dolgoznal
+
+---
+
+### Test Driven Development
+
+.center[.pisti[![TDD cycle](tdd.jpg)]]
+
+???
+
+* kulon temakor a targyban, gyakorolni fogjuk
+* eloljaroban annyit, hogy a programozas soran ugy keszul a kod, hogy elotte keszul az eppen elkeszulo kodra automatizalt teszt
+
+---
+
+### Pair Programming
+
+.center[.large-image[![Two programmer pair-programming](pair-programming.jpg)]]
+
+???
+
+* ezt is fogjatok gyakorolni
+* ket ember ul egy szamitogepnel es dolgoznak ugyanazon a feladaton, folyamatosan kommunikalva
+    * otletelnek, tisztaznak dolgokat
+    * kodot irnak, tesztelnek
+* segit fokuszalni
+* gyakran atlendit olyan akadalyokon, amin egy ember megakadna
+    * legutobbi pelda: egy kollegam Go-ban irt shared library-t akart python kodbol hivni, es debug modban segfault hibara futott
+    * odaultem melle, es ketten ennek a latszolag lehetetlen problemanak is a vegere jartunk
+* segit betartani a tobbi gyakorlatot, mert ott van a masik fel, aki arra sarkall hogy figyeljek oda ezekre is
+
+---
+
+### Stand-ups
+
+.center[.large-image[![Stand-up meeting](stand-up.jpg)]]
+
+???
+
+* nap elejen minden csapattag 1-2 percben osszefoglalja mivel foglalkozott elozo munkanap, mivel szeretne a mai nap tovabbhaladni
+* quick status update (feedback loop)
+
+---
+
+### Retrospectives
+
+.center[.pisti[![Retro](retro.jpg)]]
+
+???
+
+* idonkent osszeul a csapat, visszatekint az elozo retrospective ota eltelt idoszakra (ha hetente tartjuk akkor ez 1 het)
+* atgondoljak mi ment jol, mi az amit erdemes igy tovabb csinalni
+* min lehetne javitani, optimalizalni, hogy meg gordulekenyebb legyen a munka
+
+---
+class: middle, center
+
+# Conclusion
+
+???
+
+Nehany ismerostol megkerdeztem, szamukra mit jelent az agile / XP.
+
+---
+
+## Laszlo Teveli, Skyscanner, Software Engineer
+
+.center[.small-image[![Laszlo Teveli](https://media.licdn.com/media/p/8/000/297/27b/2d18b1f.jpg)]]
+
+> _"process a fejlesztes kore, amivel jobban, hasznosabban toltjuk a kodolasra forditott idonket"_
+
+> _"elotte is volt process, waterfall, csak lassabb volt, ezzel gyorsabb a feedback loop"_
+
+---
+
+## Daniel Szpisjak, Emarsys, Security Engineer
+
+.center[.small-image[![Daniel Szpisjak](https://media.licdn.com/media/p/2/005/092/28b/061d842.jpg)]]
+
+.center[.pisti[![Treasure map](https://cdn.pixabay.com/photo/2013/07/12/18/31/treasure-map-153425_1280.png)]]
+
+???
+
+* elkezdte XP-vel szervezni a munkajat
+* nem kifejezetten fejleszto csapat, ugyhogy nehany gyakorlatot adaptalni kellett az ertekek es elvek menten (pl. release planning)
+* de hatasos volt
+    * priorizalt backlog
+    * iteraciokban munka
+    * latjak mennyi elore nem tervezett munka esik be
+    * annyi bevallalas ami sikerulni fog, nagyjabol allando sebesseg
+    * retrospectivekkel folyamat javitasa
+* XP nelkul vezetni: kincset keresni ugy, hogy adott neked valaki egy terkepet, aki ott jart
+* XP-vel: osszeraksz egy squad-ot a megfelelo tulelesi kepessegekkel (terkepesz, orvos, helyi kultura ismeroje, stb.) es tudod melyik kontinensen van a kincs
+* security-dev interakcio
+    * elejen ijeszto, biciklivel futni a magnesvonat utan
+    * de aztan jo, mert iteracionkent lehet rahatni a fejlesztesre, nem csak a legvegen
+
+* sajat tapasztalat: a gyakorlatok uj vilagot nyitottak ki egyszemelyes fejlesztes utan
+
+* eXtreme Programming - de ma mar csak XP, nem szamit extremnek, ez a sikeret jelzi ~ structured programming, annyira mindennapi
 
 
     </textarea>
