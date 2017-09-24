@@ -21,6 +21,7 @@ console.log(require('./folder'));
 //    hanem abszolut (pl. `require('my-module');`, es nem beepitett modulrol van szo
 // akkor a platform a behivo fajl melletti node_modules mappaban keresi a modult
 // (ha ott nem talalja, akkor egy konyvtarral fejlebb lep, es ott is megnezi a node_modules konyvtarban, es igy tovabb)
+// Modulebetoltes osszefoglalo algoritmusa: https://nodejs.org/api/modules.html#modules_all_together
 console.log(require('where-is-this-file-module'));
 console.log(require('where-is-this-folder-module')); // <- akkor is megtalalja, ha mappa
 

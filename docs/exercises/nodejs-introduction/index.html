@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Korszerű webfejlesztés</title>
+  <style type="text/css">
+    body {
+      margin: 40px auto;
+      max-width: 650px;
+      line-height: 1.6;
+      font-size: 18px;
+      color: #444;
+      padding: 0 10px
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.2
+    }
+  </style>
+</head>
+
+<body>
+  <h1>NodeJS bevezető gyakorlat</h1>
+  <p>
+    Az óra célja, hogy megismertessen a NodeJS alapjaival, a tárgy megértéséhez szükséges szinten.
+    Az oktatóval közösen haladva érintünk néhány témakört, amelyek remélhetőleg elég alapot adnak a további önálló
+    ismerkedéshez.
+  </p>
+  <p>
+    Ez a dokumentum az érintett témaköröket és fogalmakat sorolja csupán fel, sorvezető céllal. Az óra során kerülnek
+    ezek részletesebb kifejtésre. Az önálló haladáshoz, vagy a gyakorlat megismétléséhez
+    <a href="https://github.com/gszabo/elte-korszeru-web/tree/master/codes/node-js-intro">
+      a megoldásokat érdemes böngészni</a>. A kódfájlok kommentjeiben találhatóak az aktuális
+      koncepció magyarázatai.
+  </p>
+
+  <h2>1. Telepítés ellenőrzése, fájl futtatása</h2>
+  <ul>
+    <li>
+      Ellenőrizzük, hogy a NodeJS fel van telepítve a számítógépre. Telepíthető <a href="https://nodejs.org/en/">a
+      hivatalos oldalról</a>, vagy Unix rendszerek alatt az <a href="https://github.com/creationix/nvm">nvm
+      segítségével</a>.
+    </li>
+    <li>Készítsünk egy egyszerű JavaScript fájlt, és futtassuk le NodeJS alatt.</li>
+  </ul>
+  <h2>2. NodeJS modulrendszer</h2>
+  <ul>
+    <li>Fájl betöltése</li>
+    <li>Mappa betöltése</li>
+    <li>node_modules használata</li>
+    <li>Module caching</li>
+  </ul>
+  <h2>3. Néhány beépített modul</h2>
+  <ul>
+    <li>Fájlok szinkron beolvasása (text és JSON)</li>
+    <li>Fájlok aszinkron beolvasása</li>
+    <li>path beépített modul</li>
+    <li>url beépített modul</li>
+  </ul>
+  <h2>4. Környezeti változók és parancssori argumentumok</h2>
+  <ul>
+    <li>Parancssori argumentumok átvétele</li>
+    <li>Környezeti változók használata</li>
+  </ul>
+  <h2>5. Az npm használata</h2>
+  <ul>
+    <li>init</li>
+    <li>install - csomag telepítése a hatalmas registryből</li>
+    <li>run script, start, test</li>
+  </ul>
+  <h2>6. Tesztelés</h2>
+  <ul>
+    <li>Egyszerű, egyenlőség alapú ellenőrzés</li>
+    <li>Néhány chai matcher használata ellenőrzésre</li>
+    <li>Lebegőpontos számok ellenőrzése toleranciával</li>
+    <li>Hibás inputok tesztelése</li>
+    <li>mocha watch és reporter paraméterek</li>
+  </ul>
+
+  <h2>Hivatkozások</h2>
+  <ul>
+    <li><a href="https://nodejs.org/api/index.html">NodeJS API dokumentáció</a></li>
+    <li><a href="https://nodejs.org/api/modules.html#modules_all_together">Modulbetöltés összefoglaló algoritmusa</a></li>
+    <li><a href="https://www.npmjs.com/">npm package registry</a></li>
+  </ul>
+</body>
+
+</html>

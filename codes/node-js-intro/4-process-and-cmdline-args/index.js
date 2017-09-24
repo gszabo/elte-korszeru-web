@@ -25,8 +25,9 @@ console.log(sum(a, b));
 // ---------------- Environment variables ----------------
 
 // Kornyezeti valtozokat a process.env objektumon keresztul lehet elerni
-// ahhoz, hogy ez kiirjon valamit, igy kell futtatni a fajlt: `ALMAFA=42 node index.js`
+// ahhoz, hogy ez kiirjon valamit, igy kell futtatni a fajlt: `ALMAFA=aaa node index.js`
 // kulonben undefined lesz
+// A kornyezeti valtozok is stringkent jonnek at az alkalmazasba, mas tipushoz konverzio szukseges
 console.log('Process env', process.env.ALMAFA);
 
 // Az alkalmazás kényszerített megállítása
