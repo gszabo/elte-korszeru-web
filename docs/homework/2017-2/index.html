@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="github-markdown.css">
+  <title>2017. őszi házi feladat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .markdown-body {
+      box-sizing: border-box;
+      min-width: 200px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 45px;
+    }
+
+    @media (max-width: 767px) {
+      .markdown-body {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body class="markdown-body">
+  <h1 id="f-l-vi-beadand-feladat">Félévi beadandó feladat</h1>
+  <p>Célunk egy szoftver készítése, melynek segítségével ki tudjuk választani a &quot;legjobb&quot; számokat zenei albumokról.
+    Aggodalomra semmi ok, nem egy jó ízléssel megáldott mesterséges intelligenciát kell készíteni, ugyanis rendelkezésre
+    áll számos kiváló ízlésű ember zenehallgatási statisztikája. Pontosabban, meg tudjuk mondani hogy mely számokat hányszor
+    hallgatták meg, és ezen információ birtokában kellene kiválogatni a legjobbakat egy albumról.</p>
+  <p>A szoftvert egy NodeJS alapú webszerver készítésével kell megvalósítani, természetesen az órán tanultak felhasználásával,
+    tesztvezérelt fejlesztéssel.</p>
+  <h2 id="a-m-dszer">A módszer</h2>
+  <p>Először azt gondolnánk, hogy egy albumon a legtöbször meghallgatott számok a legjobbak. Kis gondolkodás után azonban beláthatjuk,
+    hogy ennek a megközelítésnek van egy hibája. Ugyanis tegyük fel, hogy minden szám egyformán jó az albumon. Érdekes módon
+    az album elején található számokat többször fogják meghallgatni az emberek, mint a közepén vagy a végén levőket. Ennek
+    oka, hogy az emberek tipikusan az elején kezdik el hallgatni az albumot, meghallgatnak néhány számot, majd miután fülük
+    kezd valami másra vágyni, leállítják az albumot. Ez azt eredményezi, hogy ha mindegyik szám egyformán jó egy albumon,
+    akkor a számok meghallgatási gyakorisága a Zipf-törvényt követi.</p>
+  <p>A
+    <a href="https://plus.maths.org/content/mystery-zipf">Zipf-törvény</a> egy megfigyelésen alapuló tapasztalati törvény, melyet először az emberi nyelvekben található szavak
+    előfordulási gyakoriságára mondtak ki. Később megfigyelték, hogy más jelenségek leírásánál is helytálló. Azt mondja ki,
+    hogy az
+    <em>n</em>. leggyakoribb elem előfordulási gyakorisága egy sokaságban fordítottan arányos
+    <em>n</em>-nel.</p>
+  <p>Jelen helyzetben ez azt jelenti, hogy egy albumban, melyen a számok egyformán jók, az első szám meghallgatásának gyakorisága
+    kétszerese a második száménak. Általánosan az első számot
+    <em>n</em>-szer többet hallgatják meg, mint az
+    <em>n</em>. számot.</p>
+  <p>Ha egy szám jobb, mint a többiek, akkor azt többször fogják meghallgatni, mint amennyit a Zipf-törvény jósolna. Ezeket
+    kell az alkalmazásnak megtalálnia. Formalizálva, tegyük fel, hogy az
+    <em>i</em>. számot az albumon
+    <em>f
+      <sub>i</sub>
+    </em>-szer játszották le, a Zipf-törvény szerint pedig
+    <em>z
+      <sub>i</sub>
+    </em>-szer kellett volna. Definiáljuk a zeneszám
+    <em>q
+      <sub>i</sub>
+    </em>
+    <em>minőségi indexét</em>
+    <code>q<sub>i</sub> = f<sub>i</sub> / z<sub>i</sub></code> formában. Az alkalmazásnak a legmagasabb minőségi indexszel rendelkező számokat kell kiválasztania.</p>
+  <h2 id="az-elv-r-sok">Az elvárások</h2>
+  <ul>
+    <li>Lehessen megadni az alkalmazásnak albumokat, a rajtuk található számok címével és azok hallgatási gyakoriságával.</li>
+    <li>Le kell tudni kérdezni az alkalmazástól egy album
+      <em>n</em> darab legjobb minőségi indexével rendelkező számának címét.</li>
+    <li>Ha két szám azonos minőségi indexszel rendelkezik, akkor soroljuk előrébb az albumon is előbb található számot (feltehetőleg
+      okkal tették a szerzők ebben a sorrendben az albumra őket)</li>
+    <li>Az előbb definiált műveletekre biztosítson az alkalmazás egy HTTP alapú API-t, az alábbi endpointokkal:
+      <ul>
+        <li>POST
+          <code>/albums</code> - egy új album adatainak feltöltésére</li>
+        <li>GET
+          <code>/albums/:album_id/best?top=n</code> - egy album legjobb
+          <em>n</em> számának lekérdezésére</li>
+      </ul>
+    </li>
+    <li>Minden HTTP API endpoint JSON adattípust várjon és azzal válaszoljon. A küldött és fogadott JSON objektumok szerkezete
+      megtalálható a példáknál.</li>
+    <li>Az API-n ellenőrizzük a bemenet helyességét, és válaszoljunk 400-as HTTP status code-dal ha hibát találunk a bemenetben
+      (pl. a legjobb
+      <em>n</em> szám lekérdésénél nincs megadva
+      <em>n</em>).</li>
+    <li>A GET-es endpoint legyen idempotens művelet, azaz egymás utáni többszöri végrehajtása járjon ugyanazzal az eredménnyel.
+      Ne módosítson állapotot az alkalmazásban.</li>
+    <li>Készüljenek end-to-end tesztek a HTTP API-hoz.</li>
+  </ul>
+  <p>Feltehetjük, hogy egy albumon az első szám meghallgatásának gyakorisága nagyobb, mint nulla.</p>
+  <p>A feladathoz néhány lépésben segítséget adunk. Érdemes ezt a sorrendet követni (de nem kötelező), így kis lépésekben haladhatunk
+    a megoldás felé. A lépéseknél nem hangsúlyozzuk ki a teszteket, azonban elvárás, hogy az egyes funkcionalitások le legyenek
+    fedve teszttel - ha lehetséges ezek TDD-vel készüljenek el.</p>
+  <p>Az alkalmazás kódja legyen könnyen olvasható, magától értetődő, kövesse a clean code elveit. A kommenteket kerüljük.</p>
+  <h2 id="p-lda">Példa</h2>
+  <h3 id="album-felt-lt-se">Album feltöltése</h3>
+  <pre><code>
+      POST /albums
+      [{ <span class="hljs-string">"frequency"</span>: <span class="hljs-number">30</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"one"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">30</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"two"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">15</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"three"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">25</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"four"</span> }]
+      // Válasz =&gt; { id: <span class="hljs-number">1</span> }
+
+      POST /albums
+      [{ <span class="hljs-string">"frequency"</span>: <span class="hljs-number">197812</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"re_hash"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">78906</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"5_4"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">189518</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"tomorrow_comes_today"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">39453</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"new_genious"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">210492</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"clint_eastwood"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">26302</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"man_research"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">22544</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"punk"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">19727</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"sound_check"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">17535</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"double_bass"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">18782</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"rock_the_house"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">198189</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"19_2000"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">13151</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"latin_simone"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">12139</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"starshine"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">11272</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"slow_country"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">10521</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"m1_a1"</span> }]
+      // Válasz =&gt; { id: <span class="hljs-number">2</span> }
+      </code></pre>
+  <h3 id="legjobb-sz-mok-kiv-laszt-sa">Legjobb számok kiválasztása</h3>
+  <pre><code>
+      GET /albums/<span class="hljs-number">1</span>/best?top=<span class="hljs-number">2</span>
+      // Válasz =&gt; [{ <span class="hljs-string">"title"</span>: <span class="hljs-string">"four"</span> }, { <span class="hljs-string">"title"</span>: <span class="hljs-string">"two"</span> }]
+
+      GET /albums/<span class="hljs-number">2</span>/best?top=<span class="hljs-number">3</span>
+      // Válasz =&gt; [{ <span class="hljs-string">"title"</span>: <span class="hljs-string">"19_2000"</span> }, { <span class="hljs-string">"title"</span>: <span class="hljs-string">"clint_eastwood"</span> }, { <span class="hljs-string">"title"</span>: <span class="hljs-string">"tomorrow_comes_today"</span> }]
+    </code></pre>
+  <h2 id="1-l-p-s">1. lépés</h2>
+  <p>Hozzunk létre egy egyszerű NodeJS alkalmazást és kezdjük az üzleti logikával. A webszerverrel a feladat végén foglalkozunk,
+    nélküle is el tud készülni az alkalmazás nagy része.</p>
+  <p>Készítsük el a feladatot ellátó, BestSongsFinder osztályt melynek átadva az albumot és az
+    <em>n</em> értéket, megkapjuk a követelményeknek megfelelő számok címét.</p>
+  <p>Példa:</p>
+  <pre><code class="lang-javascript">
+      <span class="hljs-keyword">const</span> album = [...];
+      <span class="hljs-keyword">const</span> n = <span class="hljs-number">3</span>;
+      <span class="hljs-keyword">const</span> bestSongsFinder = <span class="hljs-keyword">new</span> BestSongsFinder(album, n);
+      <span class="hljs-keyword">const</span> bestSongs = bestSongsFinder.find(); // -&gt; [<span class="hljs-string">"title1"</span>, <span class="hljs-string">"title2"</span>, <span class="hljs-string">"title3"</span>]
+      </code></pre>
+  <p>Nem szükséges minden funkcionalitást ebben az osztályban implementálni. Érdemes lehet elindulni ennél kisebb egységekkel,
+    amikről tudjuk, hogy szükségesek az üzleti logikához (pl. Zipf-eloszlás generátor, minőségi index számító, listarendező)
+    és könnyebb tesztvezérelten kifejleszteni őket.</p>
+  <h2 id="2-l-p-s">2. lépés</h2>
+  <p>Készítsünk egy egyszerű webszervert, melynek első endpointján POST kéréssel albumokat vihetünk fel. Adjunk hozzá egy GET
+    endpointot, mellyel a felvitt albumok lekérdezhetők. Természetesen elég, ha az albumokat csak a memóriában tároljuk,
+    a feladathoz nem várjuk el az adatbázis használatát.</p>
+  <pre><code>
+      POST /albums
+      [{ <span class="hljs-string">frequency:</span> <span class="hljs-number">1</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'title1'</span> }]
+      <span class="hljs-comment">// Válasz =&gt; { id: 1 }</span>
+
+      POST /albums
+      [{ <span class="hljs-string">frequency:</span> <span class="hljs-number">2</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'title2'</span> },
+      { <span class="hljs-string">frequency:</span> <span class="hljs-number">3</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'title3'</span> }]
+      <span class="hljs-comment">// Válasz =&gt; { id: 2 }</span>
+
+      GET /albums
+      <span class="hljs-comment">// Válasz =&gt; [{</span>
+      <span class="hljs-symbol">  id:</span> <span class="hljs-number">1</span>,
+      <span class="hljs-symbol">  songs:</span> [{ <span class="hljs-string">frequency:</span> <span class="hljs-number">1</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'title1'</span> }]
+      }, {
+      <span class="hljs-symbol">  id:</span> <span class="hljs-number">2</span>,
+      <span class="hljs-symbol">  songs:</span> [{ <span class="hljs-string">frequency:</span> <span class="hljs-number">2</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'title2'</span> }, { <span class="hljs-string">frequency:</span> <span class="hljs-number">3</span>, <span class="hljs-string">title:</span> <span class="hljs-string">'title3'</span> }]
+      }]
+      </code></pre>
+  <h2 id="3-l-p-s">3. lépés</h2>
+  <p>Bővítsük szerverünket egy endpoint-al, melyen kiválaszthatjuk a legjobb
+    <em>n</em> számot egy albumról.</p>
+  <pre><code>
+      POST /albums
+      [{ <span class="hljs-string">"frequency"</span>: <span class="hljs-number">30</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"one"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">30</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"two"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">15</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"three"</span> },
+      { <span class="hljs-string">"frequency"</span>: <span class="hljs-number">25</span>, <span class="hljs-string">"title"</span>: <span class="hljs-string">"four"</span> }]
+      // Válasz =&gt; { id: <span class="hljs-number">1</span> }
+
+      GET /albums/<span class="hljs-number">1</span>/best?top=<span class="hljs-number">2</span>
+      // Válasz =&gt; [{ <span class="hljs-string">"title"</span>: <span class="hljs-string">"four"</span> }, { <span class="hljs-string">"title"</span>: <span class="hljs-string">"two"</span> }]
+      </code></pre>
+</body>
+
+</html>
